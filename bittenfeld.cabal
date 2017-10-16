@@ -1,0 +1,46 @@
+name: bittenfeld
+author: Julius Roob
+description: IRC Bot
+version: 0.0.0
+build-type: Simple
+cabal-version: >= 1.10
+license: MIT
+license-file: LICENSE.rst
+extra-source-files: README.rst DESIGN.rst
+
+source-repository head
+  type:     git
+  location: https://git.z0ttel.net/bittenfeld
+
+library Bittenfeld
+  default-language: Haskell2010
+  hs-source-dirs:   src
+  exposed-modules:  Bittenfeld
+  build-depends:
+    base,
+    mtl,
+    bytestring,
+    network,
+    attoparsec
+
+executable bittenfeld-main
+  default-language: Haskell2010
+  hs-source-dirs:   app
+  main-is:          Main.hs
+  build-depends:
+    base,
+    mtl,
+    bytestring,
+    network,
+    attoparsec,
+    Bittenfeld
+
+test-suite bittenfeld-test
+  default-language: Haskell2010
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   tests
+  main-is:          TestMain.hs
+  build-depends:
+    base, mtl, bytestring, network,
+    attoparsec, hspec, QuickCheck, Bittenfeld
+
