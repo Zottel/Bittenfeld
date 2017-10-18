@@ -37,9 +37,9 @@ data IRC_InMessage = IRC_InMessage IRC_Sender IRC_Command
 parse_Sender :: Parser IRC_Sender
 parse_Sender =
       do P8.char8 ':'
-         nick <- P8.takeWhile (/='!')
+         nick <- P8.takeWhile (\c -> (c /='!') && (c /= ' '))
          P8.char8 '!'
-         user <- P8.takeWhile (/='@')
+         user <- P8.takeWhile (\c -> (c /='@') && (c /= ' '))
          P8.char8 '@'
          host <- P8.takeWhile (/=' ')
          return $ IRC_User (unpack nick) (unpack user) (unpack host)
