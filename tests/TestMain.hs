@@ -20,6 +20,7 @@ main = hspec $ do
       shouldParse
         parse_Command "PING 123"
         (IRC_Command "PING" ["123"])
+
     it "Parses a simple command 2" $ do
       shouldParse
         parse_Command "PRIVMSG #test :Hallo Welt"
@@ -27,23 +28,23 @@ main = hspec $ do
 
     it "Parse a Server" $ do
       shouldParse
-        parse_Sender ":irc.z0ttel.net"
-        (IRC_Server "irc.z0ttel.net")
+        parse_Sender ":irc.bittenfeld.test"
+        (IRC_Server "irc.bittenfeld.test")
 
     it "Parse a Server 2" $ do
       shouldParse
-        parse_Sender ":irc0.zrh.ch.swissirc.net"
-        (IRC_Server "irc0.zrh.ch.swissirc.net")
+        parse_Sender ":irc0.zrh.ch.swissirc.test"
+        (IRC_Server "irc0.zrh.ch.swissirc.test")
 
     it "Parse a User" $ do
       shouldParse
-        parse_Sender ":z0ttel!z0ttel@z0ttel.net"
-        (IRC_User "z0ttel" "z0ttel" "z0ttel.net")
+        parse_Sender ":bittenfeld!bittenfeld@bittenfeld.test"
+        (IRC_User "bittenfeld" "bittenfeld" "bittenfeld.test")
 
     it "Parse a full line" $ do
       shouldParse
-        parse_InMessage ":z0ttel!z0ttel@z0ttel.net PRIVMSG #test :Hallo Welt!"
-        (IRC_InMessage (IRC_User "z0ttel" "z0ttel" "z0ttel.net")
+        parse_InMessage ":bittenfeld!bittenfeld@bittenfeld.test PRIVMSG #test :Hallo Welt!"
+        (IRC_InMessage (IRC_User "bittenfeld" "bittenfeld" "bittenfeld.test")
                        (IRC_Command "PRIVMSG" ["#test", "Hallo Welt!"]))
 
     it "Parse a full line 2" $ do
