@@ -27,6 +27,7 @@ data IRC_Command = IRC_Command String [String]
 
 data IRC_InMessage = IRC_InMessage IRC_Sender IRC_Command
   deriving (Show, Eq)
+
 --data IRC_OutMessage = IRC_Command
 --  deriving (Show)
 
@@ -61,12 +62,12 @@ parse_Parameter =
 
 parse_Command :: Parser IRC_Command
 parse_Command =
-      do command <- P8.takeWhile1 (/=' ')
+      do command <- P8.takeWhile (\c -> (c /=':') && (c /= ' '))
          P8.char8 ' '
          parameters <- parse_Parameter `sepBy` (P8.char8 ' ')
          --parameters <- many1 parse_Parameter
          return $ IRC_Command (unpack command) parameters
-  <|> do command <- P8.takeWhile1 (/=' ')
+  <|> do command <- P8.takeWhile (\c -> (c /=':') && (c /= ' '))
          return $ IRC_Command (unpack command) []
 
 parse_InMessage :: Parser IRC_InMessage
